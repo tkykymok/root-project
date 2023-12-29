@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  postgres-demo:
+    build: # build指定を追加
+      context: . # Dockerfileのディレクトリを指定
+      dockerfile: db/Dockerfile # Dockerfileのパスを指定
+    container_name: postgres-demo # コンテナ名を指定
+    environment: # 環境変数を設定
+      - POSTGRES_USER=${POSTGRES_USER} # データベースのユーザー名
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD} # ユーザーのパスワード
+      - POSTGRES_DB=${POSTGRES_DB} # データベース名
+    ports: # ポート番号を指定（ホスト:コンテナ）
+      - 5432:5432
+    volumes: # マッピングを指定
+      - postgres_data:/var/lib/postgresql/data # データの永続化
+      - ./db/initdb.d:/docker-entrypoint-initdb.d # 初期化用SQLのマウント
+  spring-demo:
+    build:
+      context: .
+      dockerfile: main-service/Dockerfile
+    container_name: main-service # コンテナ名を指定
+    environment: # 環境変数を設定
+      - SPRING_PROFILES_ACTIVE=dev
+    tty: true # コンテナを終了させないために設定
+    working_dir: /app # 作業ディレクトリを指定
+    volumes: # マッピングを指定
+      - ./main-service/build:/app/main-service/build
+      - ./main-service/src:/app/main-service/src
+      - ./build.gradle:/app/build.gradle
+      - ./gradlew:/app/gradlew
+      - ./gradle:/app/gradle
+      - ./settings.gradle:/app/settings.gradle
+    ports: # ポート番号を指定（ホスト:コンテナ）
+      - 8080:8080 # 実行用
+      - 5005:5005 # デバッグ用
+    depends_on: # postgresコンテナ起動後にspringコンテナを起動
+      - postgres-demo
+volumes:
+  postgres_data:
