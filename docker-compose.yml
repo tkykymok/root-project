@@ -36,5 +36,26 @@ services:
       - 5005:5005 # デバッグ用
     depends_on: # postgresコンテナ起動後にspringコンテナを起動
       - postgres
+  file-service:
+    build:
+      context: .
+      dockerfile: file-service/Dockerfile
+    container_name: file-service # コンテナ名を指定
+    environment: # 環境変数を設定
+      - SPRING_PROFILES_ACTIVE=dev
+    tty: true # コンテナを終了させないために設定
+    working_dir: /app # 作業ディレクトリを指定
+    volumes: # マッピングを指定
+      - ./file-service/build:/app/file-service/build
+      - ./file-service/src:/app/file-service/src
+      - ./build.gradle:/app/build.gradle
+      - ./gradlew:/app/gradlew
+      - ./gradle:/app/gradle
+      - ./settings.gradle:/app/settings.gradle
+    ports: # ポート番号を指定（ホスト:コンテナ）
+      - 8081:8080 # 実行用
+      - 5055:5005 # デバッグ用
+    depends_on: # postgresコンテナ起動後にspringコンテナを起動
+      - postgres
 volumes:
   postgres_data:

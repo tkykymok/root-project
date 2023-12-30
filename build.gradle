@@ -73,9 +73,44 @@ subprojects {
         }
     }
 
-//    // file-management-service 特有の設定
-//    project(':file-management-service') {
-//    }
+    // file-service 特有の設定
+    project(':file-service') {
+        bootRun {
+            mainClass = 'com.example.fileservice.FileServiceApplication'
+            jvmArgs = [
+                    '-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005',
+            ]
+        }
+
+        dependencies {
+        }
+
+        jooq {
+            version = '3.19.1'
+            configurations {
+                main {
+                    generationTool {
+                        jdbc {
+                            url = 'jdbc:postgresql://postgres-demo:5432/ddd_demo'
+                            user = 'postgres'
+                            password = '3wL$2D4s7jiNx'
+                        }
+                        generator {
+                            name = "org.jooq.codegen.JavaGenerator"
+                            database {
+                                inputSchema = 'public'
+                                includes = '.*'
+                            }
+                            target {
+                                packageName = "com.example.fileservice.infrastructure.jooq"
+                                directory = "${project.buildDir}/generated/source/jooq/main"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 
