@@ -1,4 +1,4 @@
-package com.example.mainservice.application.usecase;
+package com.example.shared.application.usecase;
 
 import java.io.IOException;
 

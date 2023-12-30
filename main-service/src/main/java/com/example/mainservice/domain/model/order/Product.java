@@ -1,8 +1,8 @@
 package com.example.mainservice.domain.model.order;
 
-import com.example.mainservice.domain.model.SingleKeyBaseEntity;
 import com.example.mainservice.domain.model.valueobject.Price;
 import com.example.mainservice.domain.model.valueobject.ProductId;
+import com.example.shared.domain.model.SingleKeyBaseEntity;
 import lombok.Getter;
 
 @Getter

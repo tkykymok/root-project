@@ -4,6 +4,7 @@ WORKDIR /app
 
 # ソースコードをイメージ内にコピー
 COPY file-service/src ./file-service/src
+COPY shared/src ./shared/src
 # シェルスクリプをイメージ内にコピー
 COPY file-service/entrypoint.sh ./spring-entrypoint.sh
 COPY ../build.gradle ./

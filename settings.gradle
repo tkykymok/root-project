@@ -1,3 +1,5 @@
 rootProject.name = 'root-project'
+include 'shared'
 include 'main-service'
 include 'file-service'
+

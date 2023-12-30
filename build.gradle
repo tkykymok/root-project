@@ -23,12 +23,21 @@ subprojects {
     dependencies {
         compileOnly 'org.projectlombok:lombok'
         annotationProcessor 'org.projectlombok:lombok'
-        implementation 'org.springframework.boot:spring-boot-starter-jooq'
         implementation 'org.springframework.boot:spring-boot-starter-web'
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
         runtimeOnly 'org.postgresql:postgresql:42.7.1'
+
+        // jooq
+        implementation 'org.springframework.boot:spring-boot-starter-jooq'
         jooqGenerator 'org.postgresql:postgresql:42.7.1'
         jooqGenerator 'jakarta.xml.bind:jakarta.xml.bind-api:3.0.1'
+    }
+
+    // main-service と file-service に対して shared モジュールを追加
+    if (name == 'main-service' || name == 'file-service') {
+        dependencies {
+            implementation project(':shared')
+        }
     }
 
     repositories {

@@ -1,10 +1,10 @@
 package com.example.mainservice.domain.model.order;
 
-import com.example.mainservice.domain.model.AggregateRoot;
 import com.example.mainservice.domain.model.valueobject.Amount;
 import com.example.mainservice.domain.model.valueobject.OrderId;
 import com.example.mainservice.domain.model.valueobject.UserId;
 import com.example.mainservice.domain.model.valueobject.VersionKey;
+import com.example.shared.domain.model.SingleKeyBaseEntity;
 import lombok.Getter;
 
 import java.math.BigDecimal;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-public class Order extends AggregateRoot<OrderId> {
+public class Order extends SingleKeyBaseEntity<OrderId> {
     private UserId userId;
     private LocalDate orderDate;
     private Amount totalAmount;

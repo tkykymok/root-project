@@ -1,7 +1,7 @@
 package com.example.mainservice.domain.model.order;
 
-import com.example.mainservice.domain.model.CompositeKeyBaseEntity;
 import com.example.mainservice.domain.model.valueobject.*;
+import com.example.shared.domain.model.CompositeKeyBaseEntity;
 import lombok.Getter;
 
 @Getter

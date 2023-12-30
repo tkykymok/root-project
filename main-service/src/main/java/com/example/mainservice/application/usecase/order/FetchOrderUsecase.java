@@ -1,11 +1,11 @@
 package com.example.mainservice.application.usecase.order;
 
-import com.example.mainservice.application.usecase.Usecase;
 import com.example.mainservice.domain.model.order.Order;
 import com.example.mainservice.domain.model.valueobject.OrderId;
 import com.example.mainservice.domain.queryservice.order.OrderDetailsResult;
 import com.example.mainservice.domain.queryservice.order.OrderQueryService;
 import com.example.mainservice.domain.repository.order.OrderRepository;
+import com.example.shared.application.usecase.Usecase;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;

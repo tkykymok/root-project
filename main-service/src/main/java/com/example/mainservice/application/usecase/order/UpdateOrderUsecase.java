@@ -1,11 +1,11 @@
 package com.example.mainservice.application.usecase.order;
 
-import com.example.mainservice.application.usecase.Usecase;
 import com.example.mainservice.domain.model.order.Order;
 import com.example.mainservice.domain.model.order.OrderItem;
 import com.example.mainservice.domain.model.valueobject.*;
 import com.example.mainservice.domain.repository.order.OrderRepository;
 import com.example.mainservice.domain.service.ProductService;
+import com.example.shared.application.usecase.Usecase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

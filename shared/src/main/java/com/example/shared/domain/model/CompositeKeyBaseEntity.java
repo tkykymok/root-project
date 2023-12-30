@@ -1,4 +1,4 @@
-package com.example.mainservice.domain.model;
+package com.example.shared.domain.model;
 
 import lombok.Getter;
 

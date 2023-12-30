@@ -1,9 +1,9 @@
 package com.example.mainservice.application.usecase.task;
 
-import com.example.mainservice.application.usecase.Usecase;
 import com.example.mainservice.domain.model.task.Task;
 import com.example.mainservice.domain.model.valueobject.TaskId;
 import com.example.mainservice.domain.repository.task.TaskRepository;
+import com.example.shared.application.usecase.Usecase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

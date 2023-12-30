@@ -1,9 +1,7 @@
 package com.example.mainservice.domain.model.valueobject;
 
-import com.example.mainservice.domain.model.ValueObject;
 
-
-public record VersionKey(Long value) implements ValueObject {
+public record VersionKey(Long value) {
     public static VersionKey of(Long value) {
         return new VersionKey(value);
     }

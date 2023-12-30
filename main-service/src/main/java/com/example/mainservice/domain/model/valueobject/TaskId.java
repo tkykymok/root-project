@@ -1,9 +1,8 @@
 package com.example.mainservice.domain.model.valueobject;
 
-import com.example.mainservice.domain.model.BaseId;
-import com.example.mainservice.domain.model.ValueObject;
+import com.example.shared.domain.model.BaseId;
 
-public record TaskId(Long value) implements BaseId<Long>, ValueObject {
+public record TaskId(Long value) implements BaseId<Long> {
     public static TaskId of(Long value) {
         if (value == null) {
             throw new IllegalArgumentException("TaskIdは必須です");

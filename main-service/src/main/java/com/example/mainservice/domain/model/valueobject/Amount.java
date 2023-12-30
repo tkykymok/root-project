@@ -1,11 +1,9 @@
 package com.example.mainservice.domain.model.valueobject;
 
-import com.example.mainservice.domain.model.ValueObject;
-
 import java.math.BigDecimal;
 
 
-public record Amount(BigDecimal value) implements ValueObject {
+public record Amount(BigDecimal value) {
     public static Amount of(BigDecimal value) {
         if (value == null) throw new IllegalArgumentException("value is null");
         if (value.compareTo(BigDecimal.ZERO) < 0) throw new IllegalArgumentException("value is negative");

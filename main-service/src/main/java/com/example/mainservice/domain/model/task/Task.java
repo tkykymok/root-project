@@ -1,7 +1,7 @@
 package com.example.mainservice.domain.model.task;
 
-import com.example.mainservice.domain.model.SingleKeyBaseEntity;
 import com.example.mainservice.domain.model.valueobject.TaskId;
+import com.example.shared.domain.model.SingleKeyBaseEntity;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
