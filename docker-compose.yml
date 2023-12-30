@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  postgres-demo:
+  postgres:
     build: # build指定を追加
       context: . # Dockerfileのディレクトリを指定
       dockerfile: db/Dockerfile # Dockerfileのパスを指定
@@ -15,7 +15,7 @@ services:
     volumes: # マッピングを指定
       - postgres_data:/var/lib/postgresql/data # データの永続化
       - ./db/initdb.d:/docker-entrypoint-initdb.d # 初期化用SQLのマウント
-  spring-demo:
+  main-service:
     build:
       context: .
       dockerfile: main-service/Dockerfile
@@ -35,6 +35,6 @@ services:
       - 8080:8080 # 実行用
       - 5005:5005 # デバッグ用
     depends_on: # postgresコンテナ起動後にspringコンテナを起動
-      - postgres-demo
+      - postgres
 volumes:
   postgres_data:
