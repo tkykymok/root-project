@@ -25,6 +25,7 @@ subprojects {
         annotationProcessor 'org.projectlombok:lombok'
         implementation 'org.springframework.boot:spring-boot-starter-jooq'
         implementation 'org.springframework.boot:spring-boot-starter-web'
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
         runtimeOnly 'org.postgresql:postgresql:42.7.1'
         jooqGenerator 'org.postgresql:postgresql:42.7.1'
         jooqGenerator 'jakarta.xml.bind:jakarta.xml.bind-api:3.0.1'
