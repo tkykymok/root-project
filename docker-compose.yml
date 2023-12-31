@@ -59,5 +59,13 @@ services:
       - 5055:5005 # デバッグ用
     depends_on: # postgresコンテナ起動後にspringコンテナを起動
       - postgres
+  localstack:
+    image: localstack/localstack
+    ports:
+      - "4566:4566"
+    environment:
+      - SERVICES=sqs
+      - DEFAULT_REGION=us-east-1
+      - DEBUG=1
 volumes:
   postgres_data:
