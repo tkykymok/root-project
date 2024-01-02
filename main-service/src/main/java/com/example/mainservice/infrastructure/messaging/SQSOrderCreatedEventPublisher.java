@@ -34,7 +34,7 @@ public class SQSOrderCreatedEventPublisher implements DomainEventPublisher<Order
                     .withQueueUrl(queueUrl)
                     .withMessageBody(objectMapper.writeValueAsString(event))
                     // FIFO queueでのみ有効
-                    .withMessageGroupId(event.getClass().getSimpleName() + "-group")
+                    .withMessageGroupId(event.getClass().getSimpleName())
                     .withMessageDeduplicationId(UUID.randomUUID().toString());
             amazonSQS.sendMessage(sendMessageRequest);
             log.info("Event has been published in SQS.");
