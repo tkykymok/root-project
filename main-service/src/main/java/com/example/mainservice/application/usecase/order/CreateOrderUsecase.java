@@ -1,15 +1,18 @@
 package com.example.mainservice.application.usecase.order;
 
+import com.example.mainservice.domain.event.order.OrderCreatedEvent;
 import com.example.mainservice.domain.model.order.Order;
 import com.example.mainservice.domain.model.order.OrderItem;
 import com.example.mainservice.domain.model.valueobject.*;
 import com.example.mainservice.domain.repository.order.OrderRepository;
 import com.example.mainservice.domain.service.ProductService;
+import com.example.mainservice.infrastructure.messaging.SQSOrderCreatedEventPublisher;
 import com.example.shared.application.usecase.Usecase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @Service
@@ -18,6 +21,8 @@ public class CreateOrderUsecase extends Usecase<CreateOrderInput, Void> {
 
     private final OrderRepository orderRepository;
     private final ProductService productService;
+    private final SQSOrderCreatedEventPublisher orderCreatedEventPublisher;
+
 
     @Override
     @Transactional
@@ -33,6 +38,10 @@ public class CreateOrderUsecase extends Usecase<CreateOrderInput, Void> {
 
         // 注文を保存する
         orderRepository.insert(order);
+
+        // 注文作成イベントを発行する
+        OrderCreatedEvent orderCreatedEvent = new OrderCreatedEvent(order, ZonedDateTime.now());
+        orderCreatedEventPublisher.publish(orderCreatedEvent);
 
         return null;
     }
@@ -53,7 +62,7 @@ public class CreateOrderUsecase extends Usecase<CreateOrderInput, Void> {
         for (OrderItemInput orderItem : orderItems) {
             OrderItem newOrderItem = OrderItem.create(
                     null,
-                    SeqNo.of(orderItems.size() + 1),
+                    SeqNo.of(order.getOrderItems().size() + 1),
                     ProductId.of(orderItem.productId()),
                     Price.of(orderItem.price()),
                     Quantity.of(orderItem.quantity())

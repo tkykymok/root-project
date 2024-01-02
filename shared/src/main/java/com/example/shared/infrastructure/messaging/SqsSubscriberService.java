@@ -6,8 +6,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class SqsSubscriberService {
 
-    @SqsListener("test-queue")
-    public void receiveMessage(String message) {
-        System.out.println("Message Received: " + message);
+    @SqsListener("test-queue.fifo")
+    public void receiveMessageFromTestQueue(String message) {
+        System.out.println("Message Received from test-queue: " + message);
     }
+
 }

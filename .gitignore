@@ -36,3 +36,4 @@ out/
 .vscode/
 /file-service/src/main/resources/application.properties
 /main-service/src/main/resources/application.properties
+/main-service/src/main/resources/application.yml
