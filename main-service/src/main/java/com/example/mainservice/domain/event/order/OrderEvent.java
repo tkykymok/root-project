@@ -1,7 +1,7 @@
 package com.example.mainservice.domain.event.order;
 
 import com.example.mainservice.domain.model.order.Order;
-import com.example.shared.domain.model.event.DomainEvent;
+import com.example.shared.domain.event.DomainEvent;
 import lombok.Getter;
 
 import java.time.ZonedDateTime;

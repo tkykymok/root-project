@@ -1,12 +1,13 @@
 package com.example.mainservice.application.usecase.order;
 
 import com.example.mainservice.domain.event.order.OrderCreatedEvent;
+import com.example.mainservice.domain.event.order.OrderCreatedEventPublisher;
 import com.example.mainservice.domain.model.order.Order;
 import com.example.mainservice.domain.model.order.OrderItem;
 import com.example.mainservice.domain.model.valueobject.*;
 import com.example.mainservice.domain.repository.order.OrderRepository;
 import com.example.mainservice.domain.service.ProductService;
-import com.example.mainservice.infrastructure.messaging.SQSOrderCreatedEventPublisher;
+import com.example.mainservice.infrastructure.messaging.publisher.SQSOrderCreatedEventPublisher;
 import com.example.shared.application.usecase.Usecase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ public class CreateOrderUsecase extends Usecase<CreateOrderInput, Void> {
 
     private final OrderRepository orderRepository;
     private final ProductService productService;
-    private final SQSOrderCreatedEventPublisher orderCreatedEventPublisher;
+    private final OrderCreatedEventPublisher orderCreatedEventPublisher;
 
 
     @Override

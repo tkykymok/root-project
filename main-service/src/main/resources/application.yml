@@ -1,0 +1,31 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://postgres-demo:5432/ddd_demo
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: 3wL$2D4s7jiNx
+  messages:
+    encoding: UTF-8
+  cloud:
+    aws:
+      region:
+        static: ap-northeast-1
+      stack:
+        auto: false
+      credentials:
+        access-key: dummy
+        secret-key: dummy
+      sqs:
+        endpoint: http://localstack:4566
+        url: http://localstack:4566/000000000000/test-queue.fifo
+        queue-name: test-queue.fifo
+
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+logging:
+  level:
+    org:
+      jooq: DEBUG

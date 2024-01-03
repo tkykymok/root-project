@@ -1,27 +1,27 @@
-package com.example.mainservice.infrastructure.messaging;
+package com.example.mainservice.infrastructure.messaging.publisher;
 
-import com.amazonaws.services.sqs.AmazonSQS;
-import com.amazonaws.services.sqs.model.SendMessageRequest;
 import com.example.mainservice.domain.event.order.OrderCreatedEvent;
-import com.example.shared.domain.model.event.publisher.DomainEventPublisher;
+import com.example.mainservice.domain.event.order.OrderCreatedEventPublisher;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import software.amazon.awssdk.services.sqs.SqsAsyncClient;
+import software.amazon.awssdk.services.sqs.model.SendMessageRequest;
 
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class SQSOrderCreatedEventPublisher implements DomainEventPublisher<OrderCreatedEvent> {
+public class SQSOrderCreatedEventPublisher implements OrderCreatedEventPublisher {
 
-    @Value("${cloud.aws.sqs.url}")
+    @Value("${spring.cloud.aws.sqs.url}")
     private String queueUrl;
 
-    private final AmazonSQS amazonSQS;
+    private final SqsAsyncClient sqsAsyncClient;
 
     private final ObjectMapper objectMapper;
 
@@ -30,13 +30,14 @@ public class SQSOrderCreatedEventPublisher implements DomainEventPublisher<Order
         log.info("Generating event : {}", event);
         SendMessageRequest sendMessageRequest = null;
         try {
-            sendMessageRequest = new SendMessageRequest()
-                    .withQueueUrl(queueUrl)
-                    .withMessageBody(objectMapper.writeValueAsString(event))
+            sendMessageRequest = SendMessageRequest.builder()
+                    .queueUrl(queueUrl)
+                    .messageBody(objectMapper.writeValueAsString(event))
                     // FIFO queueでのみ有効
-                    .withMessageGroupId(event.getClass().getSimpleName())
-                    .withMessageDeduplicationId(UUID.randomUUID().toString());
-            amazonSQS.sendMessage(sendMessageRequest);
+                    .messageGroupId(event.getClass().getSimpleName())
+                    .messageDeduplicationId(UUID.randomUUID().toString())
+                    .build();
+            sqsAsyncClient.sendMessage(sendMessageRequest);
             log.info("Event has been published in SQS.");
         } catch (JsonProcessingException e) {
             log.error("JsonProcessingException e : {} and stacktrace : {}", e.getMessage(), e);
