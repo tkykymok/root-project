@@ -14,6 +14,12 @@ gen-jooq:
 create-queue:
 	aws --endpoint-url=http://localhost:4566 sqs create-queue --queue-name test-queue.fifo --attributes FifoQueue=true
 
+get-list-queue:
+	aws sqs list-queues --endpoint-url=http://localhost:4566
+
+get-queue-url:
+	aws --endpoint-url=http://localhost:4566 sqs get-queue-url --queue-name test-queue.fifo
+
 # aws sqs list-queues --endpoint-url=http://localhost:4566
 # aws sqs receive-message --queue-url 'http://sqs.ap-northeast-1.localhost.localstack.cloud:4566/000000000000/test-queue' --endpoint-url http://localhost:4566
 
