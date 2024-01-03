@@ -26,10 +26,7 @@ subprojects {
         implementation 'org.springframework.boot:spring-boot-starter-web'
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
         runtimeOnly 'org.postgresql:postgresql:42.7.1'
-        implementation 'io.awspring.cloud:spring-cloud-aws-starter:3.1.0'
-        implementation 'io.awspring.cloud:spring-cloud-aws-sqs:3.1.0'
-
-
+        implementation 'io.awspring.cloud:spring-cloud-aws-starter-sqs:3.1.0'
 
         // jooq
         implementation 'org.springframework.boot:spring-boot-starter-jooq'
