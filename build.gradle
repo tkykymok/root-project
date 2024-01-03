@@ -12,7 +12,6 @@ java {
     sourceCompatibility = '21'
 }
 
-
 subprojects {
     // 全てのサブプロジェクトに共通の設定
     apply plugin: 'java'
@@ -32,6 +31,35 @@ subprojects {
         implementation 'org.springframework.boot:spring-boot-starter-jooq'
         jooqGenerator 'org.postgresql:postgresql:42.7.1'
         jooqGenerator 'jakarta.xml.bind:jakarta.xml.bind-api:3.0.1'
+    }
+
+    // プロジェクト名を取得
+    def projectName = project.name.replaceAll("-", "")
+    // jOOQ共通設定
+    jooq {
+        version = '3.19.1'
+        configurations {
+            main {
+                generationTool {
+                    jdbc {
+                        url = 'jdbc:postgresql://postgres-demo:5432/ddd_demo'
+                        user = 'postgres'
+                        password = '3wL$2D4s7jiNx'
+                    }
+                    generator {
+                        name = "org.jooq.codegen.JavaGenerator"
+                        database {
+                            inputSchema = 'public'
+                            includes = '.*'
+                        }
+                        target {
+                            packageName = "com.example.${projectName}.infrastructure.jooq"
+                            directory = "${project.buildDir}/generated/source/jooq/main"
+                        }
+                    }
+                }
+            }
+        }
     }
 
     // main-service と file-service に対して shared モジュールを追加
@@ -56,32 +84,6 @@ subprojects {
 
         dependencies {
         }
-
-        jooq {
-            version = '3.19.1'
-            configurations {
-                main {
-                    generationTool {
-                        jdbc {
-                            url = 'jdbc:postgresql://postgres-demo:5432/ddd_demo'
-                            user = 'postgres'
-                            password = '3wL$2D4s7jiNx'
-                        }
-                        generator {
-                            name = "org.jooq.codegen.JavaGenerator"
-                            database {
-                                inputSchema = 'public'
-                                includes = '.*'
-                            }
-                            target {
-                                packageName = "com.example.mainservice.infrastructure.jooq"
-                                directory = "${project.buildDir}/generated/source/jooq/main"
-                            }
-                        }
-                    }
-                }
-            }
-        }
     }
 
     // file-service 特有の設定
@@ -94,32 +96,6 @@ subprojects {
         }
 
         dependencies {
-        }
-
-        jooq {
-            version = '3.19.1'
-            configurations {
-                main {
-                    generationTool {
-                        jdbc {
-                            url = 'jdbc:postgresql://postgres-demo:5432/ddd_demo'
-                            user = 'postgres'
-                            password = '3wL$2D4s7jiNx'
-                        }
-                        generator {
-                            name = "org.jooq.codegen.JavaGenerator"
-                            database {
-                                inputSchema = 'public'
-                                includes = '.*'
-                            }
-                            target {
-                                packageName = "com.example.fileservice.infrastructure.jooq"
-                                directory = "${project.buildDir}/generated/source/jooq/main"
-                            }
-                        }
-                    }
-                }
-            }
         }
     }
 }
