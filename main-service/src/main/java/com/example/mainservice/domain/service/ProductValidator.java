@@ -5,13 +5,9 @@ import com.example.mainservice.domain.repository.product.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-@Service
-@RequiredArgsConstructor
-public class ProductService {
-    private final ProductRepository productRepository;
+import java.util.List;
 
-    public boolean isProductValid(ProductId productId) {
-        return productRepository.existsById(productId);
-    }
+public interface ProductValidator {
+    void validateProductIds(List<ProductId> productIds);
 }
 

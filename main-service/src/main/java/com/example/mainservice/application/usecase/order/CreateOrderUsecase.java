@@ -6,8 +6,7 @@ import com.example.mainservice.domain.model.order.Order;
 import com.example.mainservice.domain.model.order.OrderItem;
 import com.example.mainservice.domain.model.valueobject.*;
 import com.example.mainservice.domain.repository.order.OrderRepository;
-import com.example.mainservice.domain.service.ProductService;
-import com.example.mainservice.infrastructure.messaging.publisher.SQSOrderCreatedEventPublisher;
+import com.example.mainservice.domain.service.ProductValidator;
 import com.example.shared.application.usecase.Usecase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,13 +14,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class CreateOrderUsecase extends Usecase<CreateOrderInput, Void> {
 
     private final OrderRepository orderRepository;
-    private final ProductService productService;
+    private final ProductValidator productValidator;
     private final OrderCreatedEventPublisher orderCreatedEventPublisher;
 
 
@@ -50,12 +50,10 @@ public class CreateOrderUsecase extends Usecase<CreateOrderInput, Void> {
 
     // 依存関係をチェックする
     private void checkDependencies(CreateOrderInput input) {
-        // 商品ID存在チェック
-        for (OrderItemInput orderItem : input.orderItems()) {
-            if (!productService.isProductValid(ProductId.of(orderItem.productId()))) {
-                throw new RuntimeException("商品IDが不正です");
-            }
-        }
+        List<ProductId> productIds = input.orderItems().stream()
+                .map(orderItem -> ProductId.of(orderItem.productId()))
+                .collect(Collectors.toList());
+        productValidator.validateProductIds(productIds);
     }
 
     // 注文アイテムを追加する

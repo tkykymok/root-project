@@ -4,24 +4,28 @@ import com.example.mainservice.domain.model.order.Order;
 import com.example.mainservice.domain.model.order.OrderItem;
 import com.example.mainservice.domain.model.valueobject.*;
 import com.example.mainservice.domain.repository.order.OrderRepository;
-import com.example.mainservice.domain.service.ProductService;
+import com.example.mainservice.domain.service.ProductValidator;
 import com.example.shared.application.usecase.Usecase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class UpdateOrderUsecase extends Usecase<UpdateOrderInput, Void> {
 
     private final OrderRepository orderRepository;
-    private final ProductService productService;
+    private final ProductValidator productValidator;
 
     @Override
     @Transactional
     public Void execute(UpdateOrderInput input) {
+        // 依存関係をチェックする
+        checkDependencies(input);
+
         // 注文IDを使用して、注文を検索する
         Order order = orderRepository.findByIdAndVersion(OrderId.of(input.orderId()), VersionKey.of(input.version()));
         if (order == null) {
@@ -42,13 +46,11 @@ public class UpdateOrderUsecase extends Usecase<UpdateOrderInput, Void> {
     }
 
     // 依存関係をチェックする
-    private void checkDependencies(CreateOrderInput input) {
-        // 商品ID存在チェック
-        for (OrderItemInput orderItem : input.orderItems()) {
-            if (!productService.isProductValid(ProductId.of(orderItem.productId()))) {
-                throw new RuntimeException("商品IDが不正です");
-            }
-        }
+    private void checkDependencies(UpdateOrderInput input) {
+        List<ProductId> productIds = input.orderItems().stream()
+                .map(orderItem -> ProductId.of(orderItem.productId()))
+                .collect(Collectors.toList());
+        productValidator.validateProductIds(productIds);
     }
 
     // 注文アイテムを追加する
