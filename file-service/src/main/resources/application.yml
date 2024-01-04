@@ -1,9 +1,9 @@
 spring:
   datasource:
-    url: jdbc:postgresql://postgres-demo:5432/ddd_demo
+    url: ${DATABASE_URL}
     driver-class-name: org.postgresql.Driver
-    username: postgres
-    password: 3wL$2D4s7jiNx
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
   messages:
     encoding: UTF-8
   cloud:

@@ -23,6 +23,9 @@ services:
     container_name: main-service # コンテナ名を指定
     environment: # 環境変数を設定
       - SPRING_PROFILES_ACTIVE=dev
+      - DATABASE_URL=${DATABASE_URL} # データベースのURL
+      - POSTGRES_USER=${POSTGRES_USER} # データベースのユーザー名
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD} # ユーザーのパスワード
     tty: true # コンテナを終了させないために設定
     working_dir: /app # 作業ディレクトリを指定
     volumes: # マッピングを指定
@@ -47,6 +50,9 @@ services:
     container_name: file-service # コンテナ名を指定
     environment: # 環境変数を設定
       - SPRING_PROFILES_ACTIVE=dev
+      - DATABASE_URL=${DATABASE_URL} # データベースのURL
+      - POSTGRES_USER=${POSTGRES_USER} # データベースのユーザー名
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD} # ユーザーのパスワード
     tty: true # コンテナを終了させないために設定
     working_dir: /app # 作業ディレクトリを指定
     volumes: # マッピングを指定

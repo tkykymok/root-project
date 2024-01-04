@@ -33,18 +33,23 @@ subprojects {
         jooqGenerator 'jakarta.xml.bind:jakarta.xml.bind-api:3.0.1'
     }
 
-    // プロジェクト名を取得
-    def projectName = project.name.replaceAll("-", "")
     // jOOQ共通設定
     jooq {
         version = '3.19.1'
         configurations {
+            // プロジェクト名を取得
+            def projectName = project.name.replaceAll("-", "")
+            // 環境変数を取得
+            def databaseUrl = System.getenv('DATABASE_URL')
+            def postgresUser = System.getenv('POSTGRES_USER')
+            def postgresPassword = System.getenv('POSTGRES_PASSWORD')
+
             main {
                 generationTool {
                     jdbc {
-                        url = 'jdbc:postgresql://postgres-demo:5432/ddd_demo'
-                        user = 'postgres'
-                        password = '3wL$2D4s7jiNx'
+                        url = databaseUrl
+                        user = postgresUser
+                        password = postgresPassword
                     }
                     generator {
                         name = "org.jooq.codegen.JavaGenerator"
