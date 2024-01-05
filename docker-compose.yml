@@ -79,10 +79,10 @@ services:
       - SERVICES=sqs
       - DEFAULT_REGION=ap-northeast-1
       - DEBUG=1
-      - DATA_DIR=/tmp/localstack/data
+      - DATA_DIR=/app/localstack/data
       - AWS_ACCESS_KEY_ID=dummy
       - AWS_SECRET_ACCESS_KEY=dummy
     volumes:
-      - "${TMPDIR:-/tmp/localstack}:/tmp/localstack"
+      - "${TMPDIR:-/tmp/localstack}:/app/localstack"
 volumes:
   postgres_data:
