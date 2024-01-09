@@ -17,8 +17,8 @@ spring:
         secret-key: dummy
       sqs:
         endpoint: http://localstack:4566
-        url: http://localstack:4566/000000000000/test-queue.fifo
-        queue-name: test-queue.fifo
+        url: http://localstack:4566/000000000000/test-queue
+        queue-name: test-queue
 
 server:
   port: 8080

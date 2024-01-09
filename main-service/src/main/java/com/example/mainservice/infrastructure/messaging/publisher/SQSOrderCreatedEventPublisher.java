@@ -34,8 +34,8 @@ public class SQSOrderCreatedEventPublisher implements OrderCreatedEventPublisher
                     .queueUrl(queueUrl)
                     .messageBody(objectMapper.writeValueAsString(event))
                     // FIFO queueでのみ有効
-                    .messageGroupId(event.getClass().getSimpleName())
-                    .messageDeduplicationId(UUID.randomUUID().toString())
+//                    .messageGroupId(event.getClass().getSimpleName())
+//                    .messageDeduplicationId(UUID.randomUUID().toString())
                     .build();
             sqsAsyncClient.sendMessage(sendMessageRequest);
             log.info("Event has been published in SQS.");
