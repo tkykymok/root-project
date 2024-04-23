@@ -20,7 +20,7 @@ services:
     build:
       context: .
       dockerfile: main-service/Dockerfile
-    container_name: main-service # コンテナ名を指定
+    container_name: main # コンテナ名を指定
     environment: # 環境変数を設定
       - SPRING_PROFILES_ACTIVE=dev
       - DATABASE_URL=${DATABASE_URL} # データベースのURL
@@ -53,6 +53,9 @@ services:
       - DATABASE_URL=${DATABASE_URL} # データベースのURL
       - POSTGRES_USER=${POSTGRES_USER} # データベースのユーザー名
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD} # ユーザーのパスワード
+      - AWS_ACCESS_KEY_ID={AWS_ACCESS_KEY_ID} # アクセスキー
+      - AWS_SECRET_ACCESS_KEY={AWS_SECRET_ACCESS_KEY} # シークレットアクセスキー
+      - AWS_REGION=${AWS_REGION} # AWSのリージョン
     tty: true # コンテナを終了させないために設定
     working_dir: /app # 作業ディレクトリを指定
     volumes: # マッピングを指定
@@ -76,13 +79,13 @@ services:
     ports:
       - "4566:4566"
     environment:
-      - SERVICES=sqs
+      - SERVICES=sqs,s3
       - DEFAULT_REGION=ap-northeast-1
       - DEBUG=1
-      - DATA_DIR=/app/localstack/data
+      - DATA_DIR=/tmp/localstack/data
       - AWS_ACCESS_KEY_ID=dummy
       - AWS_SECRET_ACCESS_KEY=dummy
     volumes:
-      - "${TMPDIR:-/tmp/localstack}:/app/localstack"
+      - "${TMPDIR:-/tmp/localstack}:/tmp/localstack"
 volumes:
   postgres_data:

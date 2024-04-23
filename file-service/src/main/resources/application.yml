@@ -9,12 +9,16 @@ spring:
   cloud:
     aws:
       region:
-        static: ap-northeast-1
+        static: {AWS_REGION}
       stack:
         auto: false
       credentials:
-        access-key: dummy
-        secret-key: dummy
+        access-key: {AWS_ACCESS_KEY_ID}
+        secret-key: {AWS_SECRET_ACCESS_KEY}
+        s3:
+          endpoint: http://localstack:4566
+          bucket: test-bucket
+          url: http://localstack:4566/test-bucket
       sqs:
         endpoint: http://localstack:4566
         url: http://localstack:4566/000000000000/test-queue.fifo
@@ -29,3 +33,18 @@ logging:
   level:
     org:
       jooq: DEBUG
+
+
+spring:
+  cloud:
+    aws:
+      region:
+        static: {AWS_REGION}
+      stack:
+        auto: false
+      credentials:
+        access-key: {AWS_ACCESS_KEY_ID}
+        secret-key: {AWS_SECRET_ACCESS_KEY}
+        s3:
+          endpoint: http://localstack:4566
+          bucket: test-bucket

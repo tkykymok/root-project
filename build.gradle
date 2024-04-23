@@ -26,6 +26,13 @@ subprojects {
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
         runtimeOnly 'org.postgresql:postgresql:42.7.1'
         implementation 'io.awspring.cloud:spring-cloud-aws-starter-sqs:3.1.0'
+        // https://mvnrepository.com/artifact/io.awspring.cloud/spring-cloud-aws-starter-s3
+        implementation 'io.awspring.cloud:spring-cloud-aws-starter-s3:3.1.1'
+
+        // https://mvnrepository.com/artifact/org.mybatis/mybatis
+        implementation 'org.mybatis:mybatis:3.5.16'
+
+//        implementation 'com.amazonaws:aws-java-sdk-s3'
 
         // jooq
         implementation 'org.springframework.boot:spring-boot-starter-jooq'
