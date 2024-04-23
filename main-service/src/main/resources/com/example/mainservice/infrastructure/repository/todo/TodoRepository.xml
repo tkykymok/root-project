@@ -1,4 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.mainservice.infrastructure.repository.todo.TodoRepository">
+    <resultMap id="todoResultMap" type="com.example.mainservice.domain.model.Todo">
+        <id property="id" column="id" typeHandler="com.example.mainservice.infrastructure.typehandler.IntegerValueObjectTypeHandler"/>
+        <result property="title" column="title" typeHandler="com.example.mainservice.infrastructure.typehandler.StringValueObjectTypeHandler"/>
+    </resultMap>
+
+    <select id="findAll" resultMap="todoResultMap">
+        SELECT
+            id,
+            title
+        FROM
+            todos
+    </select>
 </mapper>
