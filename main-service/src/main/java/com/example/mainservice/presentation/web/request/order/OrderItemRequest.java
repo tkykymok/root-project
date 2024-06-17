@@ -6,5 +6,6 @@ public record OrderItemRequest(
         Long orderItemId,
         Long productId,
         BigDecimal price,
-        Integer quantity) {
+        Integer quantity
+) {
 }

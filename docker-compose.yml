@@ -86,6 +86,7 @@ services:
       - AWS_ACCESS_KEY_ID=dummy
       - AWS_SECRET_ACCESS_KEY=dummy
     volumes:
-      - "${TMPDIR:-/tmp/localstack}:/tmp/localstack"
+      - ./localstack:/var/lib/localstack
+      - /var/run/docker.sock:/var/run/docker.sock
 volumes:
   postgres_data:
